@@ -10,7 +10,7 @@ use Illuminate\Http\RedirectResponse;
 
 class TeamController extends Controller
 {    
-    public function read(): View
+    public function teams(): View
     {
         return view('team.read')->with('teams', Team::all());
     }
@@ -69,5 +69,24 @@ class TeamController extends Controller
         $player->save();
 
         return redirect()->back()->with('status', "Player $player->name $player->surname terminated!");
+    }
+
+    public function players(Team $team)
+    {
+        return view('team.players')->with([
+            'players' => Player::all(),
+            'team' => $team
+        ]);
+    }
+
+    public function transfer(Team $team, Player $player) 
+    {   
+        if (!$player->team || $player->team_id !== $team->id) {
+            $player->team_id = $team->id;
+
+            $player->save();
+
+            return redirect()->back()->with('status', "Player $player->name $player->surname transfered to $team->name!");
+        }
     }
 }

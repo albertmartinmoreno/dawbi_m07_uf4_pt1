@@ -8,8 +8,7 @@
                 <th>Name</th>
                 <th>Surname</th>
                 <th>Position</th>
-                <th>Salary</th>
-                <th>Team</th>
+                <th></th>
                 <th></th>
                 <th>Players: {{ count($players) }}</th>
             </tr>
@@ -20,13 +19,8 @@
                     <td>{{ $player->name }}</td>
                     <td>{{ $player->surname }}</td>
                     <td>{{ $player->position }}</td>
-                    <td>{{ $player->salary }}</td>
                     <td>
-                        @if($player->team)
-                            {{ $player->team->name }}
-                        @else
-                            Free agent
-                        @endif
+                        <a href="/teams/update/{{ $player->team_id }}" class="btn btn-outline-success">Transfer</a>
                     </td>
                     <td>
                         <a href="/players/update/{{ $player->id }}" class="btn btn-outline-secondary">Update</a>

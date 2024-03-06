@@ -24,7 +24,7 @@ Route::get('/', function(): View {
 });
 
 Route::prefix('teams')->group(function(): void {
-    Route::get('/', [TeamController::class, 'read']);
+    Route::get('/', [TeamController::class, 'teams']);
     
     Route::get('/create', function(): View {
         return view('team.create');
@@ -41,6 +41,10 @@ Route::prefix('teams')->group(function(): void {
     Route::delete('/{team}', [TeamController::class, 'delete']);
 
     Route::delete('/players/{player}', [TeamController::class, 'terminate']);
+
+    Route::get('/players/{team}', [TeamController::class, 'players']);
+
+    Route::put('/players/{team}/{player}', [TeamController::class, 'transfer']);
 });
 
 Route::prefix('players')->group(function(): void {

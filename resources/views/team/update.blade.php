@@ -30,7 +30,8 @@
                 <div class="text-danger mb-3 text-center">{{ $message }}</div>
             @enderror
             <button class="btn btn-outline-primary mb-3">Update</button>
-            <a href="/teams" class="btn btn-outline-danger">Cancel</a>
+            <a href="/teams" class="btn btn-outline-danger mb-3">Cancel</a>
+            <a href="/teams/players/{{ $team->id }}" class="btn btn-outline-success">Transfer</a>
         </div>
     </form>
     <table class="table table-striped text-center">
