@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('content')
-    <form action="/teams" method="POST">
+    <form action="/players" method="POST">
         @csrf
         <div class="d-flex justify-content-center align-items-center flex-column">
             <div class="mb-3">
@@ -11,25 +11,25 @@
                 <div class="text-danger mb-3 text-center">{{ $message }}</div>
             @enderror
             <div class="mb-3">
-                <input type="text" name="stadium" placeholder="Stadium" class="form-control text-center" value="{{ $errors->has('stadium') ? '' : old('stadium') }}">
+                <input type="text" name="surname" placeholder="Surname" class="form-control text-center" value="{{ $errors->has('surname') ? '' : old('surname') }}">
             </div>
-            @error('stadium')
+            @error('surname')
                 <div class="text-danger mb-3 text-center">{{ $message }}</div>
             @enderror
             <div class="mb-3">
-                <input type="text" name="numMembers" placeholder="Number of members" class="form-control text-center" value="{{ $errors->has('numMembers') ? '' : old('numMembers') }}">
+                <input type="text" name="position" placeholder="Position" class="form-control text-center" value="{{ $errors->has('position') ? '' : old('position') }}">
             </div>
-            @error('numMembers')
+            @error('position')
                 <div class="text-danger mb-3 text-center">{{ $message }}</div>
             @enderror
             <div class="mb-3">
-                <input type="text" name="budget" placeholder="Budget" class="form-control text-center" value="{{ $errors->has('budget') ? '' : old('budget') }}">
+                <input type="text" name="salary" placeholder="Salary" class="form-control text-center" value="{{ $errors->has('salary') ? '' : old('salary') }}">
             </div>
-            @error('budget')
+            @error('salary')
                 <div class="text-danger mb-3 text-center">{{ $message }}</div>
             @enderror
             <button class="btn btn-outline-primary mb-3">Create</button>
-            <a href="/teams" class="btn btn-outline-danger">Cancel</a>
+            <a href="/players" class="btn btn-outline-danger">Cancel</a>
         </div>
     </form>
 @endsection

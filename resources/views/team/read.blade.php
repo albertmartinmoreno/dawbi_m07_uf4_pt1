@@ -1,19 +1,16 @@
 @extends('layout')
 
 @section('content')
-    @if(session('status'))
-        <div class="alert alert-success mb-5">{{ session('status') }}</div>
-    @endif
     <a href="/teams/create" class="btn btn-outline-primary mb-5">Create</a>
     <table class="table table-striped mb-5 text-center">
         <thead>
             <tr>
-                <th>name</th>
-                <th>stadium</th>
-                <th>numMembers</th>
-                <th>budget</th>
+                <th>Name</th>
+                <th>Stadium</th>
+                <th>Number of members</th>
+                <th>Budget</th>
                 <th></th>
-                <th></th>
+                <th>Teams: {{ count($teams) }}</th>
             </tr>
         </thead>
         <tbody>
@@ -27,7 +24,7 @@
                         <a href="/teams/update/{{ $team->id }}" class="btn btn-outline-secondary">Update</a>
                     </td>
                     <td>
-                        <form action="/teams/{{ $team->id }}" method="POST" onsubmit="handleSubmit(event)">
+                        <form action="/teams/{{ $team->id }}" method="POST" onsubmit="handleSubmit(event, '{{ $team->name }}')">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-outline-danger">Delete</button>
@@ -37,12 +34,11 @@
             @endforeach
         </tbody>
     </table>
-    {{ $teams->links() }}
     <script>
-        function handleSubmit(event) {
+        function handleSubmit(event, name) {
             event.preventDefault();
 
-            if (confirm("Delete team {{ $team->name }}?")) {
+            if (confirm(`Delete team ${name}?`)) {
                 event.target.submit();
             }
         }

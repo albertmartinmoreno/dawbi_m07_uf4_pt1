@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Player;
 use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -9,15 +10,9 @@ use Illuminate\Http\RedirectResponse;
 
 class TeamController extends Controller
 {    
-    public function read(Request $request): View | RedirectResponse
+    public function read(): View
     {
-        $teams = Team::paginate(10);
-
-        if ($request->input('page') > $teams->lastPage()) {
-            return redirect()->back();
-        }
-
-        return view('team.read', ['teams' => $teams]);
+        return view('team.read')->with('teams', Team::all());
     }
 
     public function create(Request $request): RedirectResponse
@@ -44,8 +39,8 @@ class TeamController extends Controller
     public function update(Request $request, Team $team): RedirectResponse
     {
         $request->validate([
-            'name' => "required|string|unique:teams,name,$team->id",
-            'stadium' => 'required|string',
+            'name' => "required|string|alpha|unique:teams,name,$team->id",
+            'stadium' => 'required|string|alpha',
             'numMembers' => 'required|integer',
             'budget' => 'required|numeric'
         ]);
@@ -65,5 +60,14 @@ class TeamController extends Controller
         $team->delete();
 
         return redirect('/teams')->with('status', "Team $team->name deleted!");
+    }
+
+    public function terminate(Player $player): RedirectResponse
+    {
+        $player->team_id = null;
+
+        $player->save();
+
+        return redirect()->back()->with('status', "Player $player->name $player->surname terminated!");
     }
 }

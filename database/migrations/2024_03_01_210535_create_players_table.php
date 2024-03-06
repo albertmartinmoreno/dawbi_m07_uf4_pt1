@@ -25,7 +25,6 @@ return new class extends Migration
                 ->references('id')
                 ->on('teams')
                 ->onDelete('set null');
-            $table->timestamps();
         });
     }
 

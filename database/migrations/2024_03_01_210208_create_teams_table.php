@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('stadium');
             $table->integer('numMembers');
             $table->double('budget');
-            $table->timestamps();
         });
     }
 
