@@ -12,14 +12,14 @@ class TeamController extends Controller
 {    
     public function teams(): View
     {
-        return view('team.read')->with('teams', Team::all());
+        return view('team.teams')->with('teams', Team::all());
     }
 
     public function create(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => 'required|string|unique:teams,name',
-            'stadium' => 'required|string',
+            'name' => 'required|string|unique:teams,name|regex:/^[\pL\s]+$/u',
+            'stadium' => 'required|string|regex:/^[\pL\s]+$/u',
             'numMembers' => 'required|integer',
             'budget' => 'required|numeric'
         ]);
@@ -39,8 +39,8 @@ class TeamController extends Controller
     public function update(Request $request, Team $team): RedirectResponse
     {
         $request->validate([
-            'name' => "required|string|alpha|unique:teams,name,$team->id",
-            'stadium' => 'required|string|alpha',
+            'name' => "required|string|regex:/^[\pL\s]+$/u|unique:teams,name,$team->id",
+            'stadium' => 'required|string|regex:/^[\pL\s]+$/u',
             'numMembers' => 'required|integer',
             'budget' => 'required|numeric'
         ]);
@@ -79,14 +79,16 @@ class TeamController extends Controller
         ]);
     }
 
-    public function transfer(Team $team, Player $player) 
+    public function transfer(Team $team, Player $player): RedirectResponse
     {   
-        if (!$player->team || $player->team_id !== $team->id) {
+        if ($player->team_id !== $team->id) {
             $player->team_id = $team->id;
 
             $player->save();
 
-            return redirect()->back()->with('status', "Player $player->name $player->surname transfered to $team->name!");
+            return redirect("/teams/update/$team->id")->with('status', "Player $player->name $player->surname transfered to $team->name!");
+        } else {
+            return redirect()->back()->with('status', "Player $player->name $player->surname already plays for $team->name");
         }
     }
 }

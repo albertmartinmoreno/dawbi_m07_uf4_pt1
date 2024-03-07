@@ -20,7 +20,7 @@ use Illuminate\Http\RedirectResponse;
 */
 
 Route::get('/', function(): View {
-    return view('layout');
+    return view('home');
 });
 
 Route::prefix('teams')->group(function(): void {

@@ -1,5 +1,7 @@
 @extends('layout')
 
+@section('title', 'Update')
+
 @section('content')
     <form action="/teams/{{ $team->id }}" method="POST">
         @csrf

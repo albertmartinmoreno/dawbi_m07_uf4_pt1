@@ -1,5 +1,7 @@
 @extends('layout')
 
+@section('title', 'Players')
+
 @section('content')
     <a href="/players/create" class="btn btn-outline-primary mb-5">Create</a>
     <table class="table table-striped mb-5 text-center">
@@ -26,7 +28,7 @@
                         <a href="/players/update/{{ $player->id }}" class="btn btn-outline-secondary">Update</a>
                     </td>
                     <td>
-                        <form action="/players/{{ $player->id }}" method="POST" onsubmit="handleSubmit(event, '{{ $player->name }}', '{{ $player->surname }}')">
+                        <form action="/players/{{ $player->id }}" method="POST" onsubmit="handleSubmit(event, '{{ $player->name }}', '{{ $player->surname }}', '{{ $player->team ? $player->team->name : null }}')">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-outline-danger">Delete</button>
@@ -37,12 +39,14 @@
         </tbody>
     </table>
     <script>
-        function handleSubmit(event, name, surname) {
+        function handleSubmit(event, name, surname, team) {
             event.preventDefault();
 
-            if (confirm(`Delete player ${name} ${surname}?`)) {
-                event.target.submit();
+            if (!team && !confirm(`Delete player ${name} ${surname}?`)) {
+                return;
             }
+
+            event.target.submit();
         }
     </script>
 @endsection

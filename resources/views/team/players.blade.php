@@ -1,5 +1,7 @@
 @extends('layout')
 
+@section('title', 'Players')
+
 @section('content')
     <table class="table table-striped mb-5 text-center">
         <thead>
@@ -23,7 +25,7 @@
                         @endif
                     </td>
                     <td>
-                        <form action="/teams/players/{{ $team->id }}/{{ $player->id }}" method="POST">
+                        <form action="/teams/players/{{ $team->id }}/{{ $player->id }}" method="POST" onsubmit="handleSubmit(event, '{{ $player->team ? $player->team->name : null }}', '{{ $player->name }}', '{{ $player->surname }}', '{{ $team->name }}')">
                             @csrf
                             @method('PUT')
                             <button class="btn btn-outline-success">Transfer</button>
@@ -33,4 +35,15 @@
             @endforeach
         </tbody>
     </table>
+    <script>
+        function handleSubmit(event, actual_team, name, surname, transfer_team) {
+            event.preventDefault();
+
+            if (actual_team && actual_team !== transfer_team && !confirm(`${actual_team} player. Transfer ${name} ${surname} to ${transfer_team} team?`)) {
+                return;
+            }
+
+            event.target.submit();
+        }
+    </script>
 @endsection

@@ -1,5 +1,7 @@
 @extends('layout')
 
+@section('title', 'Teams')
+
 @section('content')
     <a href="/teams/create" class="btn btn-outline-primary mb-5">Create</a>
     <table class="table table-striped mb-5 text-center">

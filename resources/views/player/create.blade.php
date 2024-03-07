@@ -1,5 +1,7 @@
 @extends('layout')
 
+@section('title', 'Create')
+
 @section('content')
     <form action="/players" method="POST">
         @csrf

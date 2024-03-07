@@ -11,7 +11,7 @@ class PlayerController extends Controller
 {
     public function read(): View
     {
-        return view('player.read')->with('players', Player::all());
+        return view('player.players')->with('players', Player::all());
     }
 
     public function delete(Player $player): RedirectResponse 
@@ -28,9 +28,9 @@ class PlayerController extends Controller
     public function create(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => 'required|string|alpha',
-            'surname' => 'required|string|alpha',
-            'position' => 'required|string|alpha',
+            'name' => 'required|string|regex:/^[\pL\s]+$/u',
+            'surname' => 'required|string|regex:/^[\pL\s]+$/u',
+            'position' => 'required|string|regex:/^[\pL\s]+$/u',
             'salary' => 'required|numeric'
         ]);
 
@@ -49,9 +49,9 @@ class PlayerController extends Controller
     public function update(Request $request, Player $player): RedirectResponse
     {
         $request->validate([
-            'name' => 'required|string|alpha',
-            'surname' => 'required|string|alpha',
-            'position' => 'required|string|alpha',
+            'name' => 'required|string|regex:/^[\pL\s]+$/u',
+            'surname' => 'required|string|regex:/^[\pL\s]+$/u',
+            'position' => 'required|string|regex:/^[\pL\s]+$/u',
             'salary' => 'required|numeric'
         ]);
 
